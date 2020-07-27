@@ -21,7 +21,6 @@ NUM_CLASSES =61
 DEVICE = "cuda:0"
 RESIZE = (320,480)
 
-
 def bilinear_kernel_initial(in_channels,out_channels,kernel_size):
     if kernel_size%2 == 1:
         center = kernel_size//2
@@ -63,7 +62,6 @@ class FCN32s_resnet18(torch.nn.Module):
         y = self.deconv(y)
         return y
 
-
 class FCN16s_resnet18(torch.nn.Module):
         def __init__(self):
             super(FCN16s_resnet18, self).__init__()
@@ -99,7 +97,6 @@ class FCN16s_resnet18(torch.nn.Module):
             fuse_layer3 = score_layer3 + up_score_layer4
             y = self.upsample_16x_layer3(fuse_layer3)
             return y
-
 
 class FCN8s_resnet18(torch.nn.Module):
     def __init__(self):
@@ -141,7 +138,6 @@ class FCN8s_resnet18(torch.nn.Module):
         y = self.upsample_8x_layer2(fuse_layer2)
         return y
 
-
 model = FCN8s_resnet18().to(DEVICE)
 # model = FCN16s_resnet18().to(DEVICE)
 # model = FCN32s_resnet18().to(DEVICE)
@@ -150,7 +146,6 @@ model = FCN8s_resnet18().to(DEVICE)
 print(model)
 output= torch.zeros((64, 3, *RESIZE)).to(DEVICE)
 print(output.size())
-
 
 # appendix the resnet architect and size of every step
 """
