@@ -17,7 +17,7 @@ import torch
 from torchvision import models
 
 # predefined
-NUM_CLASSES =61
+NUM_CLASSES = 61
 DEVICE = "cuda:0"
 RESIZE = (320,480)
 
@@ -34,7 +34,7 @@ def bilinear_kernel_initial(in_channels,out_channels,kernel_size):
     weight = np.zeros((in_channels,out_channels,kernel_size,kernel_size), dtype="float32")
 
     # only initialize the kth dimension of the kth convolutional kernel
-    weight[range(in_channels),range(out_channels),:,:] = weight2D
+    weight[range(in_channels), range(out_channels),:,:] = weight2D
     return  torch.as_tensor(weight)
 
 class FCN32s_resnet18(torch.nn.Module):
@@ -69,8 +69,7 @@ class FCN16s_resnet18(torch.nn.Module):
             for name, layer in list(models.resnet18(pretrained=True).named_children())[:-2]:
                 self.add_module(name, layer)
 
-            self.pixelwise_layer3 = torch.nn.Conv2d(in_channels=256, out_channels=NUM_CLASSES, kernel_size=1,
-                                                    stride=1)
+            self.pixelwise_layer3 = torch.nn.Conv2d(in_channels=256, out_channels=NUM_CLASSES, kernel_size=1，stride=1)
             self.upsample_16x_layer3 = torch.nn.ConvTranspose2d(in_channels=NUM_CLASSES, out_channels=NUM_CLASSES, kernel_size=32, stride=16, padding=8)
             self.upsample_16x_layer3.weight.data = bilinear_kernel_initial(in_channels=NUM_CLASSES, out_channels=NUM_CLASSES, kernel_size=32)
 
