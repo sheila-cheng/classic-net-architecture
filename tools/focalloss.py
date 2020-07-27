@@ -52,3 +52,4 @@ class FocalLoss(torch.nn.Module):
             focal_loss = loss_fn(modulating_factor*p, labels)
 
         return focal_loss
+      
