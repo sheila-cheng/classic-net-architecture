@@ -205,5 +205,4 @@ ResNet18 (
           (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
           (fc): Linear(in_features=512, out_features=1000, bias=True)
         )
-        
 """
