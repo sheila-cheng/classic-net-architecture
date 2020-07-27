@@ -42,12 +42,13 @@ class FocalLoss(torch.nn.Module):
         # ::traditional weight:: related to every class's frequency (vector of length num_classes)
 
         if self.mode == "binary":
-            focal_loss = torch.nn.BCEWithLogitsLoss(reduction=self.reduction, pos_weight=self.weight)
+            loss_fn = torch.nn.BCEWithLogitsLoss(reduction=self.reduction, pos_weight=self.weight)
+            focal_loss = loss_fn(outs, labels)
         else:
             p = F.softmax(outs, dim=1)
             modulating_factor = (1 - p) ** self.gamma
 
-            focal_loss = torch.nn.NLLLoss(modulating_factor*p, labels, weight=self.weight, ignore_index=self.ignore_index, reduction=self.reduction)
+            loss_fn = torch.nn.NLLLoss(weight=self.weight, ignore_index=self.ignore_index, reduction=self.reduction)
+            focal_loss = loss_fn(modulating_factor*p, labels)
 
         return focal_loss
-        
