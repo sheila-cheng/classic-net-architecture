@@ -48,7 +48,7 @@ class FCN32s_resnet18(torch.nn.Module):
         # may want to initialize ::self.pixelwise.weight.data:: in your own way
 
         self.deconv = torch.nn.ConvTranspose2d(in_channels=NUM_CLASSES, out_channels=NUM_CLASSES, kernel_size=64, stride=32, padding=16)
-        self.deconv.weight.data = bilinear_kernel_initial(in_channels=NUM_CLASSES, out_channels=NUM_CLASSES, kernel_size=64) # self.deconv.weight 数据类型为parameter 加了.data才是tensor
+        self.deconv.weight.data = bilinear_kernel_initial(in_channels=NUM_CLASSES, out_channels=NUM_CLASSES, kernel_size=64) 
 
     def forward(self,x):
         y = self.conv1(x)
